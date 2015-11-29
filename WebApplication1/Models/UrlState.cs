@@ -43,23 +43,21 @@ namespace WebApplication1.Models
         public static async Task<string> StartNew(Guid Id)
         {
             TaskModel taskmodel;
-            DownloaderManager.TryGetValue(Id, out taskmodel);
-            return await taskmodel.client.DownloadStringTaskAsync(new Uri(taskmodel.Site));
+            DownloaderManager.TryRemove(Id, out taskmodel);
+            var client = taskmodel.client;
+            var uri = new Uri(taskmodel.Site);
+            taskmodel = null;
+            return await client.DownloadStringTaskAsync(uri);
         } 
 
         public static UrlModel Cancel(UrlModel model)
         {
             TaskModel taskmodel;
             DownloaderManager.TryGetValue(model.ID, out taskmodel);
-            try
-            {
+            if(taskmodel?.client!=null)
                 taskmodel.client.CancelAsync();
                 model.Content = "Canceled";
-            }
-            catch (Exception ex)
-            {
-                model.Content = ex.Message;
-            }
+            
             return model;
         }
 

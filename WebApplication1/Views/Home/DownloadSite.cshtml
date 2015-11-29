@@ -3,11 +3,11 @@
 @{
     AjaxOptions ajaxOpts = new AjaxOptions
     {
-        InsertionMode = InsertionMode.InsertAfter,
+        InsertionMode = InsertionMode.ReplaceWith,
         UpdateTargetId = Model.ID.ToString()
     };
 }
-<div id="@Model.ID.ToString()">
+<div id="@Model.ID.ToString()" class="col-md-4">
     <h4>UrlState</h4>
     <hr />
     <dl class="dl-horizontal">
