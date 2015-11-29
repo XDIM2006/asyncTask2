@@ -1,0 +1,33 @@
+﻿@model WebApplication1.Models.UrlModel
+
+@{
+    ViewBag.Title = "Home Page";
+    AjaxOptions ajaxOpts = new AjaxOptions
+    {
+        InsertionMode = InsertionMode.InsertAfter,
+        UpdateTargetId = "list",
+        LoadingElementId = "loading",
+        LoadingElementDuration = 1000,
+    };
+}
+
+<div class="jumbotron">
+    <h1>Enter site</h1>
+    @using (Ajax.BeginForm("DownloadSite", "Home", ajaxOpts))
+    {
+       @Html.LabelFor(model => model.Site)
+       @Html.EditorFor(model => model.Site)
+       <input type="submit" value="Save" class="btn btn-default" />
+ 
+    }
+</div>
+<div class="row" id="list">
+
+</div>
+
+<div id="loading" class="load" style="display: none">
+    <p>Loading Data...</p>
+</div>
+
+
+
